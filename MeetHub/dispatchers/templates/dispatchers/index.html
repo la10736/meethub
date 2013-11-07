@@ -1,0 +1,9 @@
+{% if dispatchers %}
+    <ul>
+    {% for d in dispatchers %}
+    	<li><a href="{% url d.get_obj_detail_url_name d.pk %}">{{ d.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Nessun dipatcher</p>
+{% endif %}

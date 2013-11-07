@@ -1,0 +1,5 @@
+{% extends "dispatchers/dispatcher.html" %}
+{% block sidebar_list %}
+{{ block.super }}
+<li>test = <b>{{ dispatcher.test }}</b></li>
+{% endblock %}
