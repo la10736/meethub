@@ -3,6 +3,8 @@
 <pydev_variables_property name="org.python.pydev.PROJECT_VARIABLE_SUBSTITUTION">
 <key>DJANGO_MANAGE_LOCATION</key>
 <value>manage.py</value>
+<key>PROJECT_DIR_NAME</key>
+<value>MeetHub</value>
 <key>DJANGO_SETTINGS_MODULE</key>
 <value>MeetHub.settings</value>
 </pydev_variables_property>
