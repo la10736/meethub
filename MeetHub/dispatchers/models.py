@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from events.models import Event
+from hubs.models import Hub
 from django.contrib.contenttypes.models import ContentType
 import logging
 
@@ -23,6 +24,8 @@ class Dispatcher(models.Model):
     description = models.TextField(max_length=250)
     events = models.ManyToManyField(Event, through='EventDispatched')
     
+    hub = models.ForeignKey(Hub)
+
     def _event_dispatched(self, ev):
         logging.info("Event %s dispatched by %s"%(ev.title,self.name))
         ed = EventDispatched.objects.create(disptcher=self, event=ev,

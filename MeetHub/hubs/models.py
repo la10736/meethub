@@ -1,6 +1,6 @@
 from django.db import models
 from dispatchers.models import Dispatcher
-#from sources.models import Source
+from sources.models import Source
 
 
 class Hub(models.Model):

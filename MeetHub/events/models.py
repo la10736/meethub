@@ -7,6 +7,8 @@ class Event(models.Model):
     end_date = models.DateTimeField()
     place = models.CharField(max_length=150)
     body = models.TextField()
+    create_date = models.DateTimeField(auto_now_add = True)
+    change_date = models.DateTimeField(auto_now = True)
     
     def duration(self):
         return self.end_date - self.start_date
