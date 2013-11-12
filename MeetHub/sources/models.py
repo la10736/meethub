@@ -31,7 +31,8 @@ class DebugSource(Source):
         body = """%s/n/n[%s]/nTAG=%s"""%(body,self.description,self.tag)
         
         ev = Event(title=self.name, start_date=start,
-               end_date=start + datetime.timedelta(hours=dur),
+               end_date=start + 
+               datetime.timedelta(hours=dur), 
                place=place,body=body)
         self._event_generated(ev)
 

@@ -17,4 +17,5 @@ urlpatterns = patterns('',
         name=models.TestSource.get_index_url_name()),
     url(r'^test/(?P<pk>\d+)/$', views.TestSourceView.as_view(), 
         name=models.TestSource.get_detail_url_name()),
+        
 )

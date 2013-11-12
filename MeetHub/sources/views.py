@@ -1,4 +1,5 @@
 from django.views import generic
+from django.core.urlresolvers import reverse
 from django.views.generic.edit import FormView
 
 from sources.models import Source, DebugSource, TestSource
@@ -22,26 +23,22 @@ class TestIndexView(IndexView):
 class _BaseSourceView(generic.DetailView):
     context_object_name = _ctx_el
 
-class DebugSourceView(_BaseSourceView):
+class DebugSourceView(_BaseSourceView,FormView):
+    form_class = DebugForm
     model = DebugSource
     template_name = _tmpl_d + '/debugsource.html'
-    form_class = DebugForm
     
     def get_context_data(self, **kwargs):
         context = super(DebugSourceView, self).get_context_data(**kwargs)
-        context['form'] = DebugForm
+        context['form'] = self.form_class
         return context
-    
-class DebugSourcePost(FormView):
-    #success_url = 'go/here/if/all/works'
-    form_class = DebugForm
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         form.create_event(self.get_object())
-        return super(DebugSourceView, self).form_valid(form)
-
+        return FormView.form_valid(self,form)
+    
 class TestSourceView(_BaseSourceView):
     model = TestSource
     template_name = _tmpl_d + '/testsource.html'
