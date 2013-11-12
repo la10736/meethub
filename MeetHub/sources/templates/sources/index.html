@@ -1,0 +1,9 @@
+{% if sources %}
+    <ul>
+    {% for s in sources %}
+    	<li><a href="{% url s.get_obj_detail_url_name s.pk %}">{{ s.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Nessuna sorgente</p>
+{% endif %}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <title>{% block title %}{{source.name}}{% endblock %}</title>
+</head>
+
+<body>
+    {% block head %}
+	<h1>{{source.name}}</h1>
+    {% endblock %}
+    <div id="sidebar">
+        {% block sidebar %}
+        <ul>
+	        {% block sidebar_list %}
+            <li>{{source.description}}</li>
+    	    {% endblock %}
+        </ul>
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}
+        <ul>
+        {% for ev in source.events_set.all %}
+        	<li><a href="events/{{ ev.pk }}">{{ ev.title }} il {{ev.start_date}} </a></li>
+        {% endfor %}
+        </ul>
+        {% endblock %}
+    </div>
+</body>
+</html>

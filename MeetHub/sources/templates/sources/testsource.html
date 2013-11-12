@@ -1,0 +1,5 @@
+{% extends "sources/source.html" %}
+{% block sidebar_list %}
+{{ block.super }}
+<li>test = <b>{{ source.test }}</b></li>
+{% endblock %}

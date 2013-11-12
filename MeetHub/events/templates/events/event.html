@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <title>{% block title %}{{event.title}}{% endblock %}</title>
+</head>
+
+<body>
+    {% block head %}
+	<h1>{{event.title}}</h1>
+    {% endblock %}
+    <div id="sidebar">
+        {% block sidebar %}
+        Il {{ event.start_date.date }} alle ore {{ event.start_date.timetz }} presso 
+        {{ event.place }} 
+        {{ if event.is_future }}
+        	si terr&agrave;
+        {{ else }}
+        	{{ if event.is_progres }}
+        		si sta tenendo
+        	{{ else }}
+        		si &egrave; tenuto 
+        	{{ endif  }}
+        {{ endif }}
+        l'evento in oggetto della durata di {{ event.duration }}.
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}
+        {{event.body}}
+        {% endblock %}
+    </div>
+    <div id="note">
+    <ui>
+    {{ if event.cancelled }}
+    	<li> Cancellato!!! </li>
+    {{ endif }}
+    	<li> Creato il event.create_date </li>
+    {{ if event.is_changed }}
+    	<li> Ultima modifica il event.change_date </li>
+    {{ endif }}
+    </ui>
+    </div>
+</body>
+</html>
