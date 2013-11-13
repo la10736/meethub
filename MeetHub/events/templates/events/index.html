@@ -1,7 +1,9 @@
 {% if events %}
     <ul>
     {% for e in events %}
-    	<li><a href="{% url e.get_obj_detail_url_name d.pk %}">{{ e.name }}</a></li>
+    	{% if e.get_obj_detail_url_name %}
+	    	<li><a href="{% url e.get_obj_detail_url_name e.pk %}">{{ e }}</a></li>
+    	{% endif %} 
     {% endfor %}
     </ul>
 {% else %}

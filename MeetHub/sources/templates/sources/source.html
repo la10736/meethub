@@ -22,8 +22,8 @@
     <div id="content">
         {% block content %}
         <ul>
-        {% for ev in source.events_set.all %}
-        	<li><a href="events/{{ ev.pk }}">{{ ev.title }} il {{ev.start_date}} </a></li>
+        {% for ev in source.eventgenerator_set.all %}
+        	<li><a href="/events/{{ ev.event.pk }}">{{ ev.event.title }} il {{ev.event.start_date}} </a></li>
         {% endfor %}
         </ul>
         {% endblock %}

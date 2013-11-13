@@ -13,15 +13,15 @@
         {% block sidebar %}
         Il {{ event.start_date.date }} alle ore {{ event.start_date.timetz }} presso 
         {{ event.place }} 
-        {{ if event.is_future }}
+        {% if event.is_future %}
         	si terr&agrave;
-        {{ else }}
-        	{{ if event.is_progres }}
+        {% else %}
+        	{% if event.is_progres %}
         		si sta tenendo
-        	{{ else }}
+        	{% else %}
         		si &egrave; tenuto 
-        	{{ endif  }}
-        {{ endif }}
+        	{% endif  %}
+        {% endif %}
         l'evento in oggetto della durata di {{ event.duration }}.
         {% endblock %}
     </div>
@@ -33,13 +33,13 @@
     </div>
     <div id="note">
     <ui>
-    {{ if event.cancelled }}
+    {% if event.cancelled %}
     	<li> Cancellato!!! </li>
-    {{ endif }}
-    	<li> Creato il event.create_date </li>
-    {{ if event.is_changed }}
-    	<li> Ultima modifica il event.change_date </li>
-    {{ endif }}
+    {% endif %}
+    	<li> Creato il {{event.create_date}} </li>
+    {% if event.is_changed %}
+    	<li> Ultima modifica il {{event.change_date}} </li>
+    {% endif %}
     </ui>
     </div>
 </body>

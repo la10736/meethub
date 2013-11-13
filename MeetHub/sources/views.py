@@ -1,5 +1,4 @@
 from django.views import generic
-from django.core.urlresolvers import reverse
 from django.views.generic.edit import FormView
 
 from sources.models import Source, DebugSource, TestSource
@@ -27,6 +26,9 @@ class DebugSourceView(_BaseSourceView,FormView):
     form_class = DebugForm
     model = DebugSource
     template_name = _tmpl_d + '/debugsource.html'
+    
+    def get_success_url(self):
+        return self.request.path
     
     def get_context_data(self, **kwargs):
         context = super(DebugSourceView, self).get_context_data(**kwargs)

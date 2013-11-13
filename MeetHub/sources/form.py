@@ -7,7 +7,6 @@ Created on 12/nov/2013
 
 # forms.py
 from django import forms
-from datetime import datetime
 
 class DebugForm(forms.Form):
     start = forms.DateTimeField()
@@ -16,6 +15,7 @@ class DebugForm(forms.Form):
     argomenti = forms.CharField(widget=forms.Textarea)
 
     def create_event(self,dbgsrc):
-        dbgsrc.new_event(self['argomenti'],self['place'],
-                         datetime(self['start'])
-                         ,self['duration'])
+        dbgsrc.new_event(self.cleaned_data['argomenti'],
+                         self.cleaned_data['place'],
+                         self.cleaned_data['start'],
+                         self.cleaned_data['duration'])
