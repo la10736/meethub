@@ -9,10 +9,16 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+def get_db_path(name):
+    import os
+    path = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(path,'..',name)
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'sqlite.db',                      # Or path to database file if using sqlite3.
+        'NAME': get_db_path('sqlite.db'),                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
