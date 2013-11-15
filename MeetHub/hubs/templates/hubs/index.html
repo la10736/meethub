@@ -1,0 +1,9 @@
+{% if hubs %}
+    <ul>
+    {% for h in hubs %}
+    	<li><a href="{% url "hubs.hubpanel" h.pk %}">{{ h.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Nessun Hub</p>
+{% endif %}

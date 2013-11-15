@@ -8,7 +8,7 @@ from django.conf.urls import patterns, url
 from dispatchers import views, models
 
 urlpatterns = patterns('',
-    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^$', views.IndexView.as_view(), name='disptachers.index'),
     url(r'^debug/$', views.DebugIndexView.as_view(), 
         name=models.DebugDispatcher.get_index_url_name()),
     url(r'^debug/(?P<pk>\d+)/$', views.DebugDispatcherView.as_view(), 

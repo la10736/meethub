@@ -14,16 +14,22 @@ class Dispatcher(BaseAbstract):
 
     def _event_dispatched(self, ev):
         logging.info("Event %s dispatched by %s"%(ev.title,self.name))
-        ed = EventDispatched.objects.create(disptcher=self, event=ev,
+        EventDispatched.objects.create(dispatcher=self, event=ev,
                                             when=timezone.now())
-        ed.save()
     
     def dispatch(self, ev):
-        raise NotImplementedError("Override this method in the real class")
+        d = self.cast().dispatch
+        if self.dispatch == d:
+            raise NotImplementedError("Override this method in the real class")
+        d(ev)
     
     def update(self, ev):
-        logging.debug("Standard update implementation: use dispatch for %s"%(str(ev)))
-        self.dispatch(ev)
+        u = self.cast().update
+        if self.update == u:
+            logging.debug("Standard update implementation: use dispatch for %s"%(str(ev)))
+            self.dispatch(ev)
+        else:
+            u(ev)
 
 class EventDispatched(models.Model):
     event = models.ForeignKey(Event)
@@ -33,9 +39,21 @@ class EventDispatched(models.Model):
 class DebugDispatcher(Dispatcher):
     cls_tag = "dbg"
     tag = models.TextField(max_length=60)
+    
+    def dispatch(self, ev):
+        logging.info("Dispatching %s"%(str(ev)))
+        self._event_dispatched(ev)
+
+    def update(self, ev):
+        logging.info("Update %s"%(str(ev)))
 
 class TestDispatcher(Dispatcher):
     cls_tag = "tst"
     test = models.TextField(max_length=25)
 
-    
+    def dispatch(self, ev):
+        logging.info("TEST Dispatching %s"%(str(ev)))
+        self._event_dispatched(ev)
+
+    def update(self, ev):
+        logging.info("Update %s"%(str(ev)))    

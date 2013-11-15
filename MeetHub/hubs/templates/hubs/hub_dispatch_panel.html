@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <title>{% block title %}{{hub.name}}{% endblock %}</title>
+</head>
+
+<body>
+    {% block head %}
+	<h1>{{hub.description}}</h1>
+    {% endblock %}
+    <div id="sources">
+        {% block sources %}
+        <h2> Undispatched Events </h2>
+        <form action="{% url 'hubs.hubpanel' hub.pk %}" method="post">
+		{% csrf_token %}
+        <ul>
+	        {% block sources_list %}
+	        {% for s in hub.source_set.all %}
+            <li> <a href="{% url s.get_obj_detail_url_name s.pk %}">{{ s.name }}</a></li>
+            	<ul>
+            	{% for e in s.get_undipatched_events %}
+        		<li><a href="/events/{{ e.pk }}">{{ e }}</a> 
+        			<input type="checkbox" name="selected_events" id="element{{ forloop.counter }}" value="{{ e.pk }}" />
+				</li>
+				{% endfor %}
+            	</ul>
+            </li>
+            {% endfor %}
+    	    {% endblock %}
+        </ul>
+		<input type="submit" value="Dispatch" />
+		</form>
+        {% endblock %}
+    </div>
+</body>
+</html>
