@@ -1,6 +1,7 @@
 from django.views import generic
 
 from commissioni.models import CdZ
+from django.http.response import HttpResponseRedirect
 
 _ctx_index = 'consigli'
 _tmpl_d = _ctx_index
