@@ -17,7 +17,7 @@ class Source(BaseAbstract):
         EventGenerator.objects.create(source=self, event=ev,
                                             when=timezone.now())
     
-    def get_undipatched_events(self):
+    def get_undispatched_events(self):
         return self.events.filter(start_date__gte=timezone.now(), 
                                   eventdispatched__isnull=True).order_by('-start_date')
 

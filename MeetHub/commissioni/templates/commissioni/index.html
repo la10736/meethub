@@ -1,0 +1,9 @@
+{% if hubs %}
+    <ul>
+    {% for c in consigli %}
+    	<li><a href="{% url "consigli.cdz" c.pk %}">{{ c.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Nessun CdZ</p>
+{% endif %}

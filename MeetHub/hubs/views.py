@@ -23,7 +23,7 @@ class HubDispatchPanel(generic.DetailView):
     def post(self, request, *args, **kwargs):
         hub = self.get_object()
         try:
-            selected_events = [Event.objects.get(pk=pk) for pk in request.POST['selected_events']]
+            selected_events = [Event.objects.get(pk=pk) for pk in request.POST.getlist('selected_events')]
         except (KeyError, Event.DoesNotExist):
             # Redisplay the poll voting form.
             logging.error("Niente Evento!!!")
