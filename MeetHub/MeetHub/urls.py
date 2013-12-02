@@ -17,5 +17,6 @@ urlpatterns = patterns('',
     url(r'^dispatchers/', include('dispatchers.urls')),
     url(r'^sources/', include('sources.urls')),
     url(r'^events/', include('events.urls')),
+    url(r'^commissioni/', include('commissioni.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

@@ -1,6 +1,6 @@
-{% if hubs %}
+{% if commissioni %}
     <ul>
-    {% for c in consigli %}
+    {% for c in commissioni %}
     	<li><a href="{% url "consigli.cdz" c.pk %}">{{ c.name }}</a></li>
     {% endfor %}
     </ul>

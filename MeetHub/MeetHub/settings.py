@@ -134,6 +134,7 @@ INSTALLED_APPS = (
     'dispatchers',
     'sources',
     'hubs',
+    'commissioni',
 )
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 

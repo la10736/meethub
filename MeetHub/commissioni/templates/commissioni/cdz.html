@@ -2,35 +2,38 @@
 <html lang="it">
 <head>
     <!-- <link rel="stylesheet" href="style.css" /> -->
-    <title>{% block title %}{{CdZ.name}}{% endblock %}</title>
+    <title>{% block title %}{{CdZ.name}}: Eventi Automatici per Il Consiglio di Zona <b>{{CdZ.zona}}</b>{% endblock %}</title>
 </head>
 
 <body>
     {% block head %}
-	<h1>{{hub.description}}</h1>
+	<h1>{{CdZ.description}}</h1>
     {% endblock %}
-    <div id="sources">
-        {% block sources %}
-        <h2> Undispatched Events </h2>
-        <form action="{% url 'hubs.hubpanel' hub.pk %}" method="post">
+    <div id="commissioni_da_creare">
+        {% block commissioni_da_creare %}
+        {% if commissioni_new %}
+        <h2> Commissioni non ancora associate a eventi</h2>
+        <form action="{% url 'consigli.cdz' CdZ.pk %}" method="post">
 		{% csrf_token %}
         <ul>
-	        {% block sources_list %}
-	        {% for s in hub.source_set.all %}
-            <li> <a href="{% url s.get_obj_detail_url_name s.pk %}">{{ s.name }}</a></li>
-            	<ul>
-            	{% for e in s.get_undispatched_events %}
-        		<li><a href="/events/{{ e.pk }}">{{ e }}</a> 
-        			<input type="checkbox" name="selected_events" id="element{{ forloop.counter }}" value="{{ e.pk }}" />
-				</li>
-				{% endfor %}
-            	</ul>
-            </li>
+	        {% block lista_commissioni_da_creare %}
+	        {% for c in commissioni_new %}
+            	<li> <a href="{{ c.url }}">Commissione {{ c.nr }} {{ c.nome }}</a>
+            	<input type="text" hidden="true" name="creare_{{ forloop.counter }}_nr" value="{{ c.nr }}" />
+            	<input type="text" hidden="true" name="creare_{{ forloop.counter }}_nome" value="{{ c.nome }}" />
+            	<input type="text" hidden="true" name="creare_{{ forloop.counter }}_url" value="{{ c.url }}" />
+            	<input type="text" hidden="true" name="creare_{{ forloop.counter }}_data" value="{{ c.data }}" />
+            	<input type="text" hidden="true" name="creare_{{ forloop.counter }}_inizio" value="{{ c.inizio }}" />
+            	<input type="text" hidden="true" name="creare_{{ forloop.counter }}_fine" value="{{ c.fine }}" />
+        		<input type="text" hidden="true" name="creare_{{ forloop.counter }}_congiunta" value="{{ c.congiunta }}" />
+        		<input type="checkbox" name="creare" id="creare{{ forloop.counter }}" value="{{ forloop.counter }}" />
+        		</li>
             {% endfor %}
-    	    {% endblock %}
+      	    {% endblock %}
+		<input type="submit" value="Submit" name="submit" />
         </ul>
-		<input type="submit" value="Dispatch" />
 		</form>
+		{% endif %}
         {% endblock %}
     </div>
 </body>
