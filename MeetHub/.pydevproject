@@ -5,6 +5,8 @@
 <value>manage.py</value>
 <key>PROJECT_DIR_NAME</key>
 <value>MeetHub</value>
+<key>mysecret_path</key>
+<value>/home/michele/workspace/prove</value>
 <key>DJANGO_SETTINGS_MODULE</key>
 <value>MeetHub.settings</value>
 </pydev_variables_property>
@@ -14,4 +16,7 @@
 </pydev_pathproperty>
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">python 2.7</pydev_property>
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">Default</pydev_property>
+<pydev_pathproperty name="org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH">
+<path>/home/michele/workspace/prove</path>
+</pydev_pathproperty>
 </pydev_project>
