@@ -33,6 +33,59 @@ def get_text(msg):
         text = unicode(msg.get_payload(decode=True),msg.get_content_charset(),'ignore').encode('utf8','replace')
         return text.strip()
 
+def getcharsets(msg):
+    charsets = set({})
+    for c in msg.get_charsets():
+        if c is not None:
+            charsets.update([c])
+    return charsets
+
+def handleerror(errmsg, emailmsg,cs):
+    print()
+    print(errmsg)
+    print("This error occurred while decoding with ",cs," charset.")
+    print("These charsets were found in the one email.",getcharsets(emailmsg))
+    print("This is the subject:",emailmsg['subject'])
+    print("This is the sender:",emailmsg['From'])
+
+def getbodyfromemail(msg, re_sub=''):
+    body = None
+    #Walk through the parts of the email to find the text body.    
+    if msg.is_multipart():    
+        for part in msg.walk():
+
+            # If part is multipart, walk through the subparts.            
+            if part.is_multipart(): 
+
+                for subpart in part.walk():
+                    if subpart.get_content_type() == 'text/plain':
+                        # Get the subpart payload (i.e the message body)
+                        body = subpart.get_payload(decode=True) 
+                        #charset = subpart.get_charset()
+
+            # Part isn't multipart so get the email body
+            elif part.get_content_type() == 'text/plain':
+                body = part.get_payload(decode=True)
+                #charset = part.get_charset()
+
+    # If this isn't a multi-part message then get the payload (i.e the message body)
+    elif msg.get_content_maintype() == 'text':
+        body = msg.get_payload(decode=True) 
+
+    if re_sub:
+        print repr(body)
+        body = re.sub(re_sub, '', body)
+        
+    # No checking done to match the charset with the correct part. 
+    for charset in getcharsets(msg):
+        try:
+            body = body.decode(charset)
+        except UnicodeDecodeError:
+            handleerror("UnicodeDecodeError: encountered.",msg,charset)
+        except AttributeError:
+            handleerror("AttributeError: encountered" ,msg,charset)
+    return body  
+ 
 cfg = {"address":"imap.gmail.com",
        "user":mysecret.user,
        "pwd":mysecret.pwd,
@@ -68,7 +121,7 @@ for f in cfg["folders"]:
     for i in uid:
         rawm = mail.uid('fetch', i, '(RFC822)')[1][0][1]
         print "uid = " + i
-        print bs(get_text(email.message_from_string(rawm))).text
+        print bs(getbodyfromemail(email.message_from_string(rawm),r"\!\r\n")).text
         #email_message = email.message_from_string(rawm)
         #print get_first_text_block(None,email_message)
 
